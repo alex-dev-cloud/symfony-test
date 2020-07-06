@@ -38,6 +38,22 @@ class EventController extends AbstractController
             $event = $form->getData();
             $event->setCreatedAt(new \DateTime('now'));
 
+            $user = $this->getUser();
+            $event->setUser($user);
+
+            $image = $request->files->get('event')['image'];
+            $uploadDirectory = $this->getParameter('upload_directory');
+
+            $filename = md5(uniqid()) . '.' . $image->guessExtension();
+
+            $image->move(
+                $uploadDirectory,
+                $filename
+            );
+
+            $fullPath = $uploadDirectory . $filename;
+            $event->setImage($fullPath);
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($event);
             $entityManager->flush();
@@ -62,7 +78,7 @@ class EventController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="event_edit", methods={"GET","POST"})
+     * @Route("/edit/{id}", name="event_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Event $event): Response
     {

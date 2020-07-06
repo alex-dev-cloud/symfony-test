@@ -10,9 +10,8 @@
             <tr>
                 <th>Id</th>
                 <th>Title</th>
-                <th>Description</th>
                 <th>Created_at</th>
-                <th>User_id</th>
+                <th>User</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -21,12 +20,13 @@
             <tr>
                 <td>{{ event.id }}</td>
                 <td>{{ event.title }}</td>
-                <td>{{ event.description }}</td>
                 <td>{{ event.createdAt ? event.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ event.userId }}</td>
+                <td>{{ event.user.login }}</td>
                 <td>
-                    <a class="btn btn-sm btn-info mr-2" href="{{ path('event_show', {'id': event.id}) }}">show</a>
-                    <a class="btn btn-sm btn-warning mr-2" href="{{ path('event_edit', {'id': event.id}) }}">edit</a>
+                    <a class="btn btn-sm btn-info mr-2 mb-2" href="{{ path('event_show', {'id': event.id}) }}">show</a>
+                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                    <a class="btn btn-sm btn-warning mr-2 mb-2" href="{{ path('event_edit', {'id': event.id}) }}">edit</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
@@ -36,6 +36,7 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a class="btn btn-primary mt-3" href="{{ path('event_new') }}">Create new</a>
+    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+        <a class="btn btn-primary mt-3" href="{{ path('event_new') }}">Create new</a>
+    {% endif %}
 {% endblock %}

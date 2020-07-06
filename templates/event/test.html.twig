@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Event index{% endblock %}
+
+{% block body %}
+    <h1 class="text-center">All events</h1>
+
+        {% for event in events %}
+            <div class="event-block">
+
+            </div>
+
+                        <a class="btn btn-sm btn-info mr-2 mb-2" href="{{ path('event_show', {'id': event.id}) }}">show</a>
+                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                        <a class="btn btn-sm btn-warning mr-2 mb-2" href="{{ path('event_edit', {'id': event.id}) }}">edit</a>
+                    {% endif %}
+
+        {% else %}
+                <h3 class="text-center">no records found</h3>
+        {% endfor %}
+
+    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+        <a class="btn btn-primary mt-3" href="{{ path('event_new') }}">Create new</a>
+    {% endif %}
+{% endblock %}
