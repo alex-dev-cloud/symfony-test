@@ -49,9 +49,17 @@
                     </div>
 
             {% endfor %}
-        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-            <a class="btn btn-primary my-3" href="{{ path('event_new') }}">Create new</a>
-        {% endif %}
 
-
+    <div class="row">
+        <div class="col-2">
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                <a class="btn btn-primary my-4" href="{{ path('event_new') }}">Create new</a>
+            {% endif %}
+        </div>
+        <div class="col-10">
+            <div class="navigation my-4">
+                <div class="float-right">{{ knp_pagination_render(events) }}</div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

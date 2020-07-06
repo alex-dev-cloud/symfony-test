@@ -48,9 +48,15 @@ class User implements UserInterface
      */
     private $events;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Event::class, inversedBy="user_like")
+     */
+    private $like_event;
+
     public function __construct()
     {
         $this->events = new ArrayCollection();
+        $this->like_event = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -169,6 +175,32 @@ class User implements UserInterface
             if ($event->getUser() === $this) {
                 $event->setUser(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Event[]
+     */
+    public function getLikeEvent(): Collection
+    {
+        return $this->like_event;
+    }
+
+    public function addLikeEvent(Event $likeEvent): self
+    {
+        if (!$this->like_event->contains($likeEvent)) {
+            $this->like_event[] = $likeEvent;
+        }
+
+        return $this;
+    }
+
+    public function removeLikeEvent(Event $likeEvent): self
+    {
+        if ($this->like_event->contains($likeEvent)) {
+            $this->like_event->removeElement($likeEvent);
         }
 
         return $this;

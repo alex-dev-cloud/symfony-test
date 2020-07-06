@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\EventRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -43,6 +45,16 @@ class Event
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $image;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="leke_event")
+     */
+    private $user_like;
+
+    public function __construct()
+    {
+        $this->user_like = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -106,6 +118,34 @@ class Event
     public function setImage(?string $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUserLike(): Collection
+    {
+        return $this->user_like;
+    }
+
+    public function addUserLike(User $userLike): self
+    {
+        if (!$this->user_like->contains($userLike)) {
+            $this->user_like[] = $userLike;
+            $userLike->addLekeEvent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserLike(User $userLike): self
+    {
+        if ($this->user_like->contains($userLike)) {
+            $this->user_like->removeElement($userLike);
+            $userLike->removeLekeEvent($this);
+        }
 
         return $this;
     }
