@@ -1,42 +1,57 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Event index{% endblock %}
+{% block title %}Events{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('/assets/css/indexEvent.css') }}">
+{% endblock %}
 
 {% block body %}
-    <h1 class="text-center">All events</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Created_at</th>
-                <th>User</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
+    <h1 id="test" class="text-center">All events</h1>
+
         {% for event in events %}
-            <tr>
-                <td>{{ event.id }}</td>
-                <td>{{ event.title }}</td>
-                <td>{{ event.createdAt ? event.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ event.user.login }}</td>
-                <td>
-                    <a class="btn btn-sm btn-info mr-2 mb-2" href="{{ path('event_show', {'id': event.id}) }}">show</a>
-                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                    <a class="btn btn-sm btn-warning mr-2 mb-2" href="{{ path('event_edit', {'id': event.id}) }}">edit</a>
-                    {% endif %}
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-        <a class="btn btn-primary mt-3" href="{{ path('event_new') }}">Create new</a>
-    {% endif %}
+            <div class="event-block">
+                <div class="row">
+                    <div class="col-12">
+                        <h4 class="text-center">{{ event.title }}</h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="event-image-container">
+                            <img src="/uploads/{{ event.image ?? 'event_placeholder.png' }}" alt="event">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-1">
+                       № {{ event.id }} |
+                    </div>
+                    <div class="col-4">
+                        Created <b>On</b> <i>{{ event.createdAt ? event.createdAt|date('Y-m-d H:i:s') : '' }}</i>
+                    </div>
+                    <div class="col-3">
+                       <b>By</b> &bullet; {{ event.user.login | upper }} &bullet;
+                    </div>
+                    <div class="col-4">
+                        <a class="btn btn-sm btn-info mr-2 mb-2" href="{{ path('event_show', {'id': event.id}) }}">show</a>
+                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                            <a class="btn btn-sm btn-warning mr-2 mb-2" href="{{ path('event_edit', {'id': event.id}) }}">edit</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% else %}
+                    <div class="row">
+                        <div class="col-md-12">no records found</div>
+                    </div>
+
+            {% endfor %}
+        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+            <a class="btn btn-primary my-3" href="{{ path('event_new') }}">Create new</a>
+        {% endif %}
+
+
 {% endblock %}

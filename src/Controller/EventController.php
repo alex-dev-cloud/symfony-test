@@ -44,15 +44,16 @@ class EventController extends AbstractController
             $image = $request->files->get('event')['image'];
             $uploadDirectory = $this->getParameter('upload_directory');
 
-            $filename = md5(uniqid()) . '.' . $image->guessExtension();
 
-            $image->move(
-                $uploadDirectory,
-                $filename
-            );
+            if ($image) {
 
-            $fullPath = $uploadDirectory . $filename;
-            $event->setImage($fullPath);
+                $filename = md5(uniqid()) . '.' . $image->guessExtension();
+                $image->move(
+                    $uploadDirectory,
+                    $filename
+                );
+                $event->setImage($filename);
+            }
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($event);

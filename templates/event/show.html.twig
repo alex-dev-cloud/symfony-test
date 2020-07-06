@@ -32,7 +32,7 @@
     <div class="d-flex">
         <a class="btn btn-secondary mr-2" href="{{ path('event_index') }}">back to list</a>
         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-            <a class="btn btn-warning mr-2" href="{{ path('event_edit', {'id': event.id}) }}">edit</a>
+            <a class="btn btn-warning mr-2 edit-btn" href="{{ path('event_edit', {'id': event.id}) }}">edit</a>
             {{ include('event/_delete_form.html.twig') }}
         {% endif %}
     </div>
