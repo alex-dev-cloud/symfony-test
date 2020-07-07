@@ -14,9 +14,11 @@
         {% for event in events %}
             <div class="event-block">
                 <div class="row">
-                    <div class="col-1 float-left">
-                        <a class="btn btn-sm btn-info btn-like" href="{{ path('event_like', {'id': event.id}) }}">like</a>
-                    </div>
+                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                        <div class="col-1 float-left">
+                            <a class="btn-like" href="{{ path('event_like', {'id': event.id}) }}"><img src="{{ asset('/assets/img/icons/like.svg') }}" alt="LIKE"></a>
+                        </div>
+                    {% endif %}
                     <div class="col-11">
                         <h4 class="text-center">{{ event.title }}</h4>
                     </div>

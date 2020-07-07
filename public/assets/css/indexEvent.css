@@ -20,5 +20,20 @@ img {
     margin: 15px auto;
 }
 
+.btn-like {
+    display: block;
+    width: 40px;
+    height: 40px;
+    padding: 10px;
+    border-radius: 50%;
+    background-color: #c6e5d8;
+    border: 1px solid #5e5e5e;
+    transition: background-color .2s ease-in;
+}
+
+
+.btn-like:hover {
+    background-color: #85d7b4;
+}
 
 
