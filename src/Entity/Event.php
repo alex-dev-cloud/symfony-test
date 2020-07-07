@@ -47,7 +47,7 @@ class Event
     private $image;
 
     /**
-     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="leke_event")
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="like_event")
      */
     private $user_like;
 
@@ -134,7 +134,7 @@ class Event
     {
         if (!$this->user_like->contains($userLike)) {
             $this->user_like[] = $userLike;
-            $userLike->addLekeEvent($this);
+            $userLike->addLikeEvent($this);
         }
 
         return $this;
@@ -144,7 +144,7 @@ class Event
     {
         if ($this->user_like->contains($userLike)) {
             $this->user_like->removeElement($userLike);
-            $userLike->removeLekeEvent($this);
+            $userLike->removeLikeEvent($this);
         }
 
         return $this;

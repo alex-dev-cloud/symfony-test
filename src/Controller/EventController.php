@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Event;
+use App\Entity\User;
 use App\Form\EventType;
 use App\Repository\EventRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -44,6 +45,7 @@ class EventController extends Controller
      */
     public function new(Request $request): Response
     {
+
         $event = new Event();
         $form = $this->createForm(EventType::class, $event);
         $form->handleRequest($request);
@@ -101,6 +103,24 @@ class EventController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $image = $request->files->get('event')['image'];
+            $uploadDirectory = $this->getParameter('upload_directory');
+
+            $event = $form->getData();
+
+            if ($image) {
+
+                $filename = md5(uniqid()) . '.' . $image->guessExtension();
+
+                $image->move(
+                    $uploadDirectory,
+                    $filename
+                );
+
+                $event->setImage($filename);
+            }
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('event_index');
@@ -125,4 +145,14 @@ class EventController extends Controller
 
         return $this->redirectToRoute('event_index');
     }
+
+    /**
+     * @Route("/like/{id}", name="event_like", methods={"GET"})
+     */
+    public function like(Request $request)
+    {
+
+    }
+
+
 }

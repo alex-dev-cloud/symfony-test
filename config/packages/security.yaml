@@ -37,8 +37,9 @@ security:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
 
-        - { path: ^/new, roles: IS_AUTHENTICATED_REMEMBERED }
-        - { path: ^/edit, roles: IS_AUTHENTICATED_REMEMBERED }
+        - { path: ^/new, roles: ROLE_ADMIN }
+        - { path: ^/edit, roles: ROLE_ADMIN }
+        - { path: ^/\d+, roles: ROLE_ADMIN, methods: [DELETE] }
 
         - { path: ^/logout, roles: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }

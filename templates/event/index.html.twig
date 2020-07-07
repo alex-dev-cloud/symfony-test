@@ -35,11 +35,13 @@
                     <div class="col-3">
                        <b>By</b> &bullet; {{ event.user.login | upper }} &bullet;
                     </div>
-                    <div class="col-4">
-                        <a class="btn btn-sm btn-info mr-2 mb-2" href="{{ path('event_show', {'id': event.id}) }}">show</a>
-                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                            <a class="btn btn-sm btn-warning mr-2 mb-2" href="{{ path('event_edit', {'id': event.id}) }}">edit</a>
-                        {% endif %}
+                    <div class="col-4 ">
+                        <div class="float-right">
+                            <a class="btn btn-sm btn-info mr-2 mb-2" href="{{ path('event_show', {'id': event.id}) }}">show</a>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a class="btn btn-sm btn-warning mr-2 mb-2" href="{{ path('event_edit', {'id': event.id}) }}">edit</a>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -52,7 +54,7 @@
 
     <div class="row">
         <div class="col-2">
-            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+            {% if is_granted('ROLE_ADMIN') %}
                 <a class="btn btn-primary my-4" href="{{ path('event_new') }}">Create new</a>
             {% endif %}
         </div>
