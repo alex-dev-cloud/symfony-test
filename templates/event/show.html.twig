@@ -42,7 +42,7 @@
             </tr>
         </tbody>
     </table>
-    <div class="d-flex">
+    <div class="d-flex mb-4">
         <a class="btn btn-secondary mr-2" href="{{ path('event_index') }}">back to list</a>
         {% if is_granted('ROLE_ADMIN') %}
             <a class="btn btn-warning mr-2 edit-btn" href="{{ path('event_edit', {'id': event.id}) }}">edit</a>
