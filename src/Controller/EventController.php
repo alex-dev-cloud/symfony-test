@@ -23,7 +23,7 @@ class EventController extends Controller
     /**
      * @Route("/", name="event_index", methods={"GET"})
      */
-    public function index(EventRepository $eventRepository, Request $request, EntityManagerInterface $entityManager): Response
+    public function index(EventRepository $eventRepository, Security $security, Request $request, EntityManagerInterface $entityManager): Response
     {
         $dql   = "SELECT e FROM App:Event e";
         $query = $entityManager->createQuery($dql);
@@ -37,8 +37,14 @@ class EventController extends Controller
             3
         );
 
+        $page = $events->getCurrentPageNumber();
+        $user = $security->getUser();
+
+
         return $this->render('event/index.html.twig', [
             'events' => $events,
+            'user' => $user,
+            'page' => $page,
         ]);
     }
 
@@ -51,6 +57,7 @@ class EventController extends Controller
         $event = new Event();
         $form = $this->createForm(EventType::class, $event);
         $form->handleRequest($request);
+
 
         if ($form->isSubmitted() && $form->isValid()) {
             $event = $form->getData();
@@ -99,7 +106,7 @@ class EventController extends Controller
     /**
      * @Route("/like/{id}", name="event_like", methods={"GET"})
      */
-    public function like(Security $security, Event $event) : Response
+    public function like(Security $security, Event $event, Request $request) : Response
     {
         $user = $security->getUser();
 
@@ -114,7 +121,9 @@ class EventController extends Controller
             $entityManager->persist($event);
             $entityManager->flush();
         }
-        return $this->redirect('/..');
+
+        $page = $request->query->get('page');
+        return $this->redirect($this->generateUrl('event_index', ['page' => $page]));
     }
 
     /**
@@ -168,7 +177,5 @@ class EventController extends Controller
         }
         return $this->redirectToRoute('event_index');
     }
-
-
 
 }

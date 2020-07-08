@@ -8,18 +8,16 @@
 {% endblock %}
 
 {% block body %}
-
-    <h1 id="test" class="text-center">All events</h1>
-
+        <h1 class="text-center main-title mb-3">ALL EVENTS</h1>
         {% for event in events %}
             <div class="event-block">
                 <div class="row">
                     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                        <div class="col-1 float-left">
-                            <a class="btn-like" href="{{ path('event_like', {'id': event.id}) }}"><img src="{{ asset('/assets/img/icons/like.svg') }}" alt="LIKE"></a>
+                        <div class="like-btn-container">
+                            <a class="btn-like {% if ( event.getUserLike.contains(user)) %}active{% endif %}" href="{{ path('event_like', {'id': event.id, 'page': page}) }}"><img src="{{ asset('/assets/img/icons/like.svg') }}" alt="LIKE"></a>
                         </div>
                     {% endif %}
-                    <div class="col-11">
+                    <div class="col-12">
                         <h4 class="text-center">{{ event.title }}</h4>
                     </div>
                 </div>
@@ -30,23 +28,21 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-1">
-                       № {{ event.id }} |
+                <div class="row event-data-container">
+                    <div class="id-container">
+                       № {{ event.id }}
                     </div>
-                    <div class="col-4">
+                    <div class="col-6">
                         Created <b>On</b> <i>{{ event.createdAt ? event.createdAt|date('Y-m-d H:i:s') : '' }}</i>
                     </div>
-                    <div class="col-3">
+                    <div class="col-6">
                        <b>By</b> &bullet; {{ event.user.login | upper }} &bullet;
                     </div>
-                    <div class="col-4 ">
-                        <div class="float-right">
+                    <div class="action-container">
                             <a class="btn btn-sm btn-info mr-2 mb-2" href="{{ path('event_show', {'id': event.id}) }}">show</a>
                             {% if is_granted('ROLE_ADMIN') %}
                                 <a class="btn btn-sm btn-warning mr-2 mb-2" href="{{ path('event_edit', {'id': event.id}) }}">edit</a>
                             {% endif %}
-                        </div>
                     </div>
                 </div>
             </div>

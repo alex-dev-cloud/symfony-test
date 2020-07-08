@@ -6,6 +6,15 @@ img {
 
 }
 
+.main-title {
+    height: 140px;
+    background-color: #000000;
+    font-size: 50px;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 140px;
+}
+
 .event-block {
     padding: 10px;
     border-bottom: 2px solid #ccc;
@@ -13,11 +22,20 @@ img {
     border-left: 1px solid #ccc;
     border-right: 1px solid #ccc;
     margin-bottom: 15px;
+    background-color: #FFFFFF;
+    position: relative;
 }
 
 .event-image-container {
     max-width: 615px;
     margin: 15px auto;
+}
+
+.like-btn-container {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 100;
 }
 
 .btn-like {
@@ -26,14 +44,37 @@ img {
     height: 40px;
     padding: 10px;
     border-radius: 50%;
-    background-color: #c6e5d8;
+    background-color: #c9c9c9;
     border: 1px solid #5e5e5e;
     transition: background-color .2s ease-in;
 }
 
+.btn-like.active {
+    background-color: #cb2d2d;
+}
 
 .btn-like:hover {
-    background-color: #85d7b4;
+    background-color: #cb2d2d;
 }
+
+.event-data-container {
+    max-width: 615px;
+    margin: 0 auto;
+
+}
+
+.id-container {
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+}
+
+.action-container {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+}
+
+
 
 
