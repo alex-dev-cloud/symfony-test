@@ -15,6 +15,7 @@ img {
     line-height: 140px;
 }
 
+
 .event-block {
     padding: 10px;
     border-bottom: 2px solid #ccc;
@@ -55,6 +56,13 @@ img {
 
 .btn-like:hover {
     background-color: #cb2d2d;
+}
+
+.like-counter {
+    position: absolute;
+    top: 22px;
+    left: 60px;
+    font-size: 12px;
 }
 
 .event-data-container {

@@ -17,6 +17,7 @@
                             <a class="btn-like {% if ( event.getUserLike.contains(user)) %}active{% endif %}" href="{{ path('event_like', {'id': event.id, 'page': page}) }}"><img src="{{ asset('/assets/img/icons/like.svg') }}" alt="LIKE"></a>
                         </div>
                     {% endif %}
+                        <h5 class="like-counter">{{ event.getUserLike.count() }} users liked it</h5>
                     <div class="col-12">
                         <h4 class="text-center">{{ event.title }}</h4>
                     </div>

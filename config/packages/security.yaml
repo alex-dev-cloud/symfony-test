@@ -43,6 +43,7 @@ security:
 
         - { path: ^/logout, roles: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/like, roles: IS_AUTHENTICATED_REMEMBERED }
+
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
 
